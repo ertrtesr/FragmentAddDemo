@@ -55,14 +55,17 @@ public class MainActivity extends FragmentActivity {
 
         addFragment(mFirstFragment);                            //添加第一个fragment
 
-        ThreadManager.getSinglePool().execute(new Runnable() {
+        Runnable runn = new Runnable() {
+
             @Override
             public void run() {
                 for (int i = 0; i < 5; i++) {
                     System.out.println(i);
                 }
             }
-        });
+        };
+
+        ThreadManager.getSinglePool().execute(runn);
     }
 
     @OnClick({R.id.btn1, R.id.btn2, R.id.btn3})
@@ -89,15 +92,15 @@ public class MainActivity extends FragmentActivity {
      */
     public void swithFragment(Fragment to) {
         if (mCurrentFragment != to) {
-            if (!to.isAdded()) {             //判断fragment是否有add过
-                addFragment(to);                     //没有add过就add一下
+            if (!to.isAdded()) {                        //判断fragment是否有add过
+                addFragment(to);                        //没有add过就add一下
             }
             FragmentTransaction ft = mFm.beginTransaction();
             for (Fragment fragment : mFragments) {
-                ft = ft.hide(fragment);      //遍历集合,先隐藏所有的fragment
+                ft = ft.hide(fragment);                 //遍历集合,先隐藏所有的fragment
             }
-            ft.show(to).commit();            //展示对应的fragment并提交,注意commit后事务就不可以再复用了
-            mCurrentFragment = to;           //置为当前的fragment
+            ft.show(to).commit();                       //展示对应的fragment并提交,注意commit后事务就不可以再复用了
+            mCurrentFragment = to;                      //置为当前的fragment
         }
     }
 
@@ -109,7 +112,13 @@ public class MainActivity extends FragmentActivity {
     public void addFragment(Fragment fragment) {
         if (!fragment.isAdded()) {
             mFm.beginTransaction().add(R.id.fl, fragment, fragment.getClass().getCanonicalName()).commit();
-            mFragments.add(fragment);                     //将fragment加入集合,到时用于遍历集合
+            mFragments.add(fragment);                   //将fragment加入集合,到时用于遍历集合
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.out.println(mCurrentFragment);
+        super.onBackPressed();
     }
 }
