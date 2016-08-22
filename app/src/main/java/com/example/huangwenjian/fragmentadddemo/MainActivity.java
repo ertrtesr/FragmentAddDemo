@@ -55,7 +55,7 @@ public class MainActivity extends FragmentActivity {
 
         addFragment(mFirstFragment);                            //添加第一个fragment
 
-        Runnable runn = new Runnable() {
+        ThreadManager.getSinglePool().execute(new Runnable() {
 
             @Override
             public void run() {
@@ -63,22 +63,20 @@ public class MainActivity extends FragmentActivity {
                     System.out.println(i);
                 }
             }
-        };
-
-        ThreadManager.getSinglePool().execute(runn);
+        });
     }
 
     @OnClick({R.id.btn1, R.id.btn2, R.id.btn3})
     public void click(View v) {
         switch (v.getId()) {
             case R.id.btn1:
-                swithFragment(mFirstFragment);
+                switchFragment(mFirstFragment);
                 break;
             case R.id.btn2:
-                swithFragment(mSecondFragment);
+                switchFragment(mSecondFragment);
                 break;
             case R.id.btn3:
-                swithFragment(mThirdFragment);
+                switchFragment(mThirdFragment);
                 break;
             default:
                 break;
@@ -90,7 +88,7 @@ public class MainActivity extends FragmentActivity {
      *
      * @param to 需要切换的fragment
      */
-    public void swithFragment(Fragment to) {
+    public void switchFragment(Fragment to) {
         if (mCurrentFragment != to) {
             if (!to.isAdded()) {                        //判断fragment是否有add过
                 addFragment(to);                        //没有add过就add一下
