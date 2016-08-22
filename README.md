@@ -1,0 +1,3 @@
+# FragmentAddDemo
+集成了fragment的add,show,hide方法,不重新实例化fragment,使用fragment工厂类创建fragment
+集成线程池管理类
