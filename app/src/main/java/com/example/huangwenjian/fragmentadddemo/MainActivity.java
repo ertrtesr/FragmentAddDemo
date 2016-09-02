@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.huangwenjian.fragmentadddemo.factory.FragmentFactory;
-import com.example.huangwenjian.fragmentadddemo.manager.ThreadManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,24 +52,14 @@ public class MainActivity extends FragmentActivity {
         mSecondFragment = FragmentFactory.getFragment(1);
         mThirdFragment = FragmentFactory.getFragment(2);
 
-        addFragment(mFirstFragment);                            //添加第一个fragment
-
-        ThreadManager.getSinglePool().execute(new Runnable() {
-
-            @Override
-            public void run() {
-                for (int i = 0; i < 5; i++) {
-                    System.out.println(i);
-                }
-            }
-        });
+        addFragment(mFirstFragment);                            //初始化的时候先添加第一个fragment
     }
 
     @OnClick({R.id.btn1, R.id.btn2, R.id.btn3})
     public void click(View v) {
         switch (v.getId()) {
             case R.id.btn1:
-                switchFragment(mFirstFragment);
+                switchFragment(mFirstFragment);             //切换fragment
                 break;
             case R.id.btn2:
                 switchFragment(mSecondFragment);
@@ -118,5 +107,11 @@ public class MainActivity extends FragmentActivity {
     public void onBackPressed() {
         System.out.println(mCurrentFragment);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFragments.clear();
     }
 }

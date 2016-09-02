@@ -4,11 +4,31 @@
               android:layout_height="match_parent"
               android:gravity="center"
               android:orientation="vertical">
-    <Button
-        android:id="@+id/btn_click"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="点我"/>
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_first_click1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点1"/>
+
+        <Button
+            android:id="@+id/btn_first_click2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点2"/>
+
+        <Button
+            android:id="@+id/btn_first_click3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点3"/>
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

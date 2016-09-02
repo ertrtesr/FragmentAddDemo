@@ -1,12 +1,17 @@
 package com.example.huangwenjian.fragmentadddemo.fragments;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.huangwenjian.fragmentadddemo.R;
+import com.example.huangwenjian.fragmentadddemo.base.BaseFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者: huangwenjian
@@ -15,23 +20,65 @@ import com.example.huangwenjian.fragmentadddemo.R;
  * -
  * 日期: 16/8/22
  */
-public class SecondFragment extends android.support.v4.app.Fragment {
+public class SecondFragment extends BaseFragment {
     public static final String TAG = "SecondFragment";
 
+    @BindView(R.id.btn_second_click1)
+    Button mBtn_second_click1;
+
+    @BindView(R.id.btn_second_click2)
+    Button mBtn_second_click2;
+
+    @BindView(R.id.btn_second_click3)
+    Button mBtn_second_click3;
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void init() {
+        super.init();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void initAfterActivityCreated() {
+
+    }
+
+    @OnClick(R.id.btn_second_click1)
+    public void click1() {
+        Message message = new Message();
+        message.what = 1;
+        message.obj = "secondfragment_点了1";
+        mUIHandler.sendMessage(message);
+    }
+
+    @OnClick(R.id.btn_second_click2)
+    public void click2() {
+        Message message = new Message();
+        message.what = 2;
+        message.obj = "secondfragment_点了2";
+        mUIHandler.sendMessage(message);
+    }
+
+    @Override
+    protected void processMsg(Message message) {
+        switch (message.what) {
+            case 1:
+                System.out.println(message.obj);
+                break;
+            case 2:
+                System.out.println(message.obj);
+                break;
+            case 3:
+
+                break;
+            default:
+                break;
+        }
     }
 }
